@@ -20,13 +20,14 @@
     </tr>
   </thead>
   <tbody>
+    {{range $index, $product := .Products}}
     <tr>
-      <td>1</td>
-      <td>Product 1</td>
-      <td>Category 1</td>
-      <td>Description 1</td>
-      <td>1000</td>
-      <td>10</td>
+      <td>{{$index}}</td>
+      <td>{{$product.Name}}</td>
+      <td>{{$product.CategoryID}}</td>
+      <td>{{$product.Description}}</td>
+      <td>{{$product.Price}}</td>
+      <td>{{$product.Stock}}</td>
       <td>
         <!-- Edit -->
         {{ template "product-edit" }}
@@ -34,6 +35,7 @@
         {{ template "product-delete" }}
       </td>
     </tr>
+    {{end}}
   </tbody>
   <tfoot>
     <tr>

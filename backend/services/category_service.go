@@ -2,14 +2,34 @@ package services
 
 import (
 	"errors"
+	"go-starter/backend/db"
 	"go-starter/backend/models"
 )
 
 var categories = []models.Category{}
 var categoryID = 1
 
-func GetAllCategories() []models.Category {
-	return categories
+func GetAllCategories() ([]models.Category, error) {
+	rows, err := db.DB.Query("SELECT id, name, description FROM category")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var categories []models.Category
+	for rows.Next() {
+		var category models.Category
+		if err := rows.Scan(&category.ID, &category.Name, &category.Description); err != nil {
+			return nil, err
+		}
+		categories = append(categories, category)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return categories, nil
 }
 
 func GetCategoryByID(id int) (*models.Category, error) {

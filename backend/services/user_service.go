@@ -2,14 +2,34 @@ package services
 
 import (
 	"errors"
+	"go-starter/backend/db"
 	"go-starter/backend/models"
 )
 
 var users = []models.User{}
 var userID = 1
 
-func GetAllusers() []models.User {
-	return users
+func GetAllUsers() ([]models.User, error) {
+	rows, err := db.DB.Query("SELECT id, name, email, password, role, status FROM user")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var users []models.User
+	for rows.Next() {
+		var user models.User
+		if err := rows.Scan(&user.ID, &user.Name, &user.Email, &user.Password, &user.Role, &user.Status); err != nil {
+			return nil, err
+		}
+		users = append(users, user)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return users, nil
 }
 
 func GetUserByID(id int) (*models.User, error) {

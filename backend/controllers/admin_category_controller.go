@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"go-starter/backend/models"
 	"go-starter/backend/services"
 	"html/template"
 	"net/http"
@@ -8,6 +9,12 @@ import (
 )
 
 func CategoryController(w http.ResponseWriter, r *http.Request) {
+	categories, err := services.GetAllCategories()
+	if err != nil {
+		http.Error(w, "Failed to get categories", http.StatusInternalServerError)
+		return
+	}
+
 	tmpl := template.Must(template.ParseFiles(
 		"frontend/templates/layouts/admin/app.html",
 		"frontend/templates/layouts/admin/navbar.html",
@@ -18,7 +25,14 @@ func CategoryController(w http.ResponseWriter, r *http.Request) {
 		"frontend/templates/pages/admin/category/edit.html",
 		"frontend/templates/pages/admin/category/delete.html",
 	))
-	tmpl.ExecuteTemplate(w, "app.html", nil)
+
+	data := struct {
+		Categories []models.Category
+	}{
+		Categories: categories,
+	}
+
+	tmpl.ExecuteTemplate(w, "app.html", data)
 }
 
 func CreateCategoryController(w http.ResponseWriter, r *http.Request) {

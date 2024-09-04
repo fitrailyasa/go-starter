@@ -2,14 +2,34 @@ package services
 
 import (
 	"errors"
+	"go-starter/backend/db"
 	"go-starter/backend/models"
 )
 
 var products = []models.Product{}
-var product_id = 1
+var productID = 1
 
-func GetAllProducts() []models.Product {
-	return products
+func GetAllProducts() ([]models.Product, error) {
+	rows, err := db.DB.Query("SELECT id, name, description, img, price, stock, category_id FROM product")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var products []models.Product
+	for rows.Next() {
+		var product models.Product
+		if err := rows.Scan(&product.ID, &product.Name, &product.Description, &product.Images, &product.Price, &product.Stock, &product.CategoryID); err != nil {
+			return nil, err
+		}
+		products = append(products, product)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return products, nil
 }
 
 func GetProductByID(id int) (*models.Product, error) {
@@ -23,7 +43,7 @@ func GetProductByID(id int) (*models.Product, error) {
 
 func CreateProduct(name, description, img string, price, stock, category_id int) models.Product {
 	product := models.Product{
-		ID:          product_id,
+		ID:          productID,
 		Name:        name,
 		Description: description,
 		Images:      img,
@@ -32,7 +52,7 @@ func CreateProduct(name, description, img string, price, stock, category_id int)
 		CategoryID:  category_id,
 	}
 	products = append(products, product)
-	product_id++
+	productID++
 	return product
 }
 

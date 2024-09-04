@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"go-starter/backend/models"
 	"go-starter/backend/services"
 	"html/template"
 	"net/http"
@@ -8,6 +9,12 @@ import (
 )
 
 func ProductController(w http.ResponseWriter, r *http.Request) {
+	products, err := services.GetAllProducts()
+	if err != nil {
+		http.Error(w, "Failed to get products", http.StatusInternalServerError)
+		return
+	}
+
 	tmpl := template.Must(template.ParseFiles(
 		"frontend/templates/layouts/admin/app.html",
 		"frontend/templates/layouts/admin/navbar.html",
@@ -18,7 +25,14 @@ func ProductController(w http.ResponseWriter, r *http.Request) {
 		"frontend/templates/pages/admin/product/edit.html",
 		"frontend/templates/pages/admin/product/delete.html",
 	))
-	tmpl.ExecuteTemplate(w, "app.html", nil)
+
+	data := struct {
+		Products []models.Product
+	}{
+		Products: products,
+	}
+
+	tmpl.ExecuteTemplate(w, "app.html", data)
 }
 
 func CreateProductController(w http.ResponseWriter, r *http.Request) {

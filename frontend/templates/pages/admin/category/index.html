@@ -17,10 +17,11 @@
     </tr>
   </thead>
   <tbody>
+    {{range $index, $category := .Categories}}
     <tr>
-      <td>1</td>
-      <td>Category 1</td>
-      <td>Description 1</td>
+      <td>{{$index}}</td>
+      <td>{{$category.Name}}</td>
+      <td>{{$category.Description}}</td>
       <td>
         <!-- Edit -->
         {{ template "category-edit" }}
@@ -28,6 +29,7 @@
         {{ template "category-delete" }}
       </td>
     </tr>
+    {{end}}
   </tbody>
   <tfoot>
     <tr>

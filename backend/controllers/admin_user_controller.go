@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"go-starter/backend/models"
 	"go-starter/backend/services"
 	"html/template"
 	"net/http"
@@ -8,6 +9,12 @@ import (
 )
 
 func UserController(w http.ResponseWriter, r *http.Request) {
+	users, err := services.GetAllUsers()
+	if err != nil {
+		http.Error(w, "Failed to get users", http.StatusInternalServerError)
+		return
+	}
+
 	tmpl := template.Must(template.ParseFiles(
 		"frontend/templates/layouts/admin/app.html",
 		"frontend/templates/layouts/admin/navbar.html",
@@ -18,7 +25,14 @@ func UserController(w http.ResponseWriter, r *http.Request) {
 		"frontend/templates/pages/admin/user/edit.html",
 		"frontend/templates/pages/admin/user/delete.html",
 	))
-	tmpl.ExecuteTemplate(w, "app.html", nil)
+
+	data := struct {
+		Users []models.User
+	}{
+		Users: users,
+	}
+
+	tmpl.ExecuteTemplate(w, "app.html", data)
 }
 
 func CreateUserController(w http.ResponseWriter, r *http.Request) {

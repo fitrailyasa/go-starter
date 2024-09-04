@@ -19,12 +19,13 @@
     </tr>
   </thead>
   <tbody>
+    {{range $index, $user := .Users}}
     <tr>
-      <td>1</td>
-      <td>Admin</td>
-      <td>admin@tokusatsu</td>
-      <td>admin</td>
-      <td>active</td>
+      <td>{{$index}}</td>
+      <td>{{$user.Name}}</td>
+      <td>{{$user.Email}}</td>
+      <td>{{$user.Role}}</td>
+      <td>{{$user.Status}}</td>
       <td>
         <!-- Edit -->
         {{ template "user-edit" }}
@@ -32,6 +33,7 @@
         {{ template "user-delete" }}
       </td>
     </tr>
+    {{end}}
   </tbody>
   <tfoot>
     <tr>
