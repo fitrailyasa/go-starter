@@ -1,0 +1,46 @@
+{{ define "title" }}Category{{ end }}
+
+<!-- Content -->
+{{ define "content" }}
+
+<!-- Create -->
+<div class="mb-3 float-right">{{ template "category-create" }}</div>
+
+<!-- Table -->
+<table id="" class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Category 1</td>
+      <td>Description 1</td>
+      <td>
+        <!-- Edit -->
+        {{ template "category-edit" }}
+        <!-- Delete -->
+        {{ template "category-delete" }}
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>No</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+  </tfoot>
+</table>
+<!-- /.table -->
+
+{{ end }}
+<!-- /.content -->
+
+{{ template "layouts/admin/app.html" . }}

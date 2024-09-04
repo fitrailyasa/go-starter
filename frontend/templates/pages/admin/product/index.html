@@ -1,0 +1,55 @@
+{{ define "title" }}Product{{ end }}
+
+<!-- Content -->
+{{ define "content" }}
+
+<!-- Create -->
+<div class="mb-3 float-right">{{ template "product-create" }}</div>
+
+<!-- Table -->
+<table id="" class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Stock</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Product 1</td>
+      <td>Category 1</td>
+      <td>Description 1</td>
+      <td>1000</td>
+      <td>10</td>
+      <td>
+        <!-- Edit -->
+        {{ template "product-edit" }}
+        <!-- Delete -->
+        {{ template "product-delete" }}
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>No</th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Stock</th>
+      <th>Action</th>
+    </tr>
+  </tfoot>
+</table>
+<!-- /.table -->
+
+{{ end }}
+<!-- /.content -->
+
+{{ template "layouts/admin/app.html" . }}

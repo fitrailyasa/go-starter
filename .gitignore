@@ -1,0 +1,50 @@
+# Go build artifacts
+bin/
+build/
+*.exe
+*.test
+*.out
+
+# Go module cache
+*.sum
+
+# Golang specific
+# Binaries for programs and libraries
+*.a
+*.out
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Environment files
+.env
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Database files (if using SQLite or similar)
+*.db
+*.sqlite
+*.sqlite3
+
+# Coverage reports
+coverage.out
+*.cover
+
+# Temporary files
+*.tmp
+*.bak
+
+# Go mod vendor
+vendor/
+
+# Go build cache
+*.cache
+

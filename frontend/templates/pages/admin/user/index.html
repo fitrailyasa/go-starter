@@ -1,0 +1,52 @@
+{{ define "title" }}User{{ end }}
+
+<!-- Content -->
+{{ define "content" }}
+
+<!-- Create -->
+<div class="mb-3 float-right">{{ template "user-create" }}</div>
+
+<!-- Table -->
+<table id="" class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Admin</td>
+      <td>admin@tokusatsu</td>
+      <td>admin</td>
+      <td>active</td>
+      <td>
+        <!-- Edit -->
+        {{ template "user-edit" }}
+        <!-- Delete -->
+        {{ template "user-delete" }}
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>No</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </tfoot>
+</table>
+<!-- /.table -->
+
+{{ end }}
+<!-- /.content -->
+
+{{ template "layouts/admin/app.html" . }}
